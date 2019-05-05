@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${data.getMovie_title()}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/MainStyle.css}"/>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="../../static/js/search_filter.js" th:src="@{/static/js/search_filter.js}"></script>
+
+</head>
+
+<body id="indexBG"  >
+
+<!-- Banner -->
+<nav class="bannerA">
+    <div class="navBG">
+        <a class="btn a" style="right:5px" th:href="@{/}">Movies</a>
+        <a class="btn a" style="right:90px" th:href="@{/viewActors}">Actors</a>
+
+        <img class="btn b" style="left:0px" th:src="@{/img/Logo.png}" th:href="@{/}">
+        <div th:if="null==${user}" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="margin-right: 9px;">
+                <img class="btn b" style="left:50px" th:src="@{/img/UserButton.png}">    </a>
+            <ul class="dropdown-menu form-wrapper" style="width: 300px; background: none; top: 50px; ">
+                <li>  <form action="#" th:action="@{/loginProcess}" th:object="${login}" method="post" style=" top:50px; background: none;">
+                    <br><br>
+                    <div class="form-group" style="top: 20px; " >
+                        <input type="text" class="form-control" placeholder="Username" required="required" th:field="*{username}">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" required="required" th:field="*{password}">
+                    </div>
+                    <input type="submit" class="log" value="Login"></input>     <input type="submit" class="log" value="sign up"></input>
+                    <div class="form-footer">
+                        <br>
+                        <a href="#" style="color: white; ">Forgot Your password?</a>
+                        <hr>
+                    </div>
+                </form>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${user}">
+            <img class="" style="width: 100px; height: 70px; margin-left: 70px; margin-right: 20px;  "  th:src="${user.getUser_image()}">
+            <a class="btn a"  th:href="@{/logout}">log out</a>        </div>
+
+    </div>
+
+</nav>
+<!-- Banner -->
+
+<!-- Table -->
+<div class="container" th:style="' margin-top:35px ; background:url(' + @{/img/zincb.png} + ')no-repeat ;  background-position: top;  width: 100%; height:auto;' ">
+<div class="card mb-3 text-light" style="margin-top: 50px;">
+    <iframe  class="card-img-top" frameBorder="0" style="margin-top:20px; height:600px; "  th:src="@{https://www.youtube.com/embed/{url}(url=${data.getMovie_trailer()} )}" ></iframe>
+
+    <p class="card-body">
+    <div class="d-flex justify-content-between mb-2">
+        <div class="p-2">                <h1 class="card-title" th:text="${data.movie_title}">Card title</h1></li>
+        </div>
+        <div class="p-2"> <ul class="list-group list-group-horizontal" style="background: none;" >
+            <li class="list-group-item" style="background: none;">   <span class="fa fa-star" th:each="star:${#numbers.sequence(1,data.avg_rate)}" style="color: #fcd000;"></span>
+            </li> </ul></div>
+    </div>
+
+
+
+       <p class="card-text" th:text="${data.movie_summery}"></p>
+        <p class="card-text" >  <i class="fa fa-clock-o"></i>    <span th:text="${data.movie_duration}"><small class="text-muted">Last updated 3 mins ago</small></span></p>
+    <p class="card-text">  <i class="fa fa-calendar"></i>   <span th:text="${data.movie_release_date}"><small class="text-muted">Last updated 3 mins ago</small></span></p>
+
+    </div>
+
+
+
+
+    <div >
+        <h1 class="text-light"> Movie Cast :</h1>
+        <ul class="list-group list-group-horizontal " style="background: none;">
+            <li class="list-group-item list-group-item-action" th:each="actor:${cast}" style="background: none;">
+                <figure style="background: none;">
+                    <img th:width="100" th:height="100" class="rounded-circle" th:src="${actor.getActor_profile_image()}">
+                    <figcaption th:text="${actor.actor_name}" class="text-light"></figcaption>
+                </figure></li>
+
+        </ul>
+    </div>
+
+
+<div >
+
+<table class="table text-light">
+<tr th:each="review1, iter :${review}">
+    <td>
+    <figure >
+        <img th:src="${review_user.get(iter.index)}" th:width="100" th:height="100" >
+        <figcaption>
+            <p class="Review-author" th:text="${user_name.get(iter.index)}">Zachary Richardson</p>
+        </figcaption>
+    </figure>
+    </td>
+    <td>
+                   <ul class="list-group list-group-horizontal" style="background: none;" >
+     <li class="list-group-item" style="background: none;">   <span class="fa fa-star" th:each="star:${#numbers.sequence(1,review1.getReview_rating())}" style="color: #fcd000;"></span>
+                </li> </ul>
+
+        <p th:text="${review1.getReview_comment()}"> </p>
+    </td>
+    <td>
+        <p class="Review-date" th:text="${review1.getReview_date()}">3 days ago</p>
+
+    </td>
+</tr>
+    <tr th:if="${user}" style=" color: white; width: 100%; " >
+        <td colspan="3">
+        <form class="text-light" th:action="@{/addreview(id=${data.getMovie_id()})}" th:object="${newreview}" method="post">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                 <span class="input-group-text" >
+                     <figure>
+                     <img  th:width="100" th:height="100" th:src="${user.getUser_image()}">
+             <figcaption th:text="${user.getUser_name()}"> </figcaption></figure></span>
+            </div>
+            <div class="form-group">
+                <label>Comment</label>
+            <input  class="form-control" type="text" th:field="*{review_comment}"   placeholder="enter your review comment here "></input>
+            </div>
+            <br>
+            <div class="form-group">
+                <label>Star Rating</label>
+                <input  class="form-control" type="number" th:field="*{review_rating}"   placeholder="enter your review comment here "></input>
+            </div>
+
+            <div class="input-group-append">
+                <input class="log" type="submit" value="Submit"/>
+            </div>
+        </div>
+        </form>
+        </td>
+    </tr>
+</table>
+</div>
+</div>
+</body>
+
+
+</html>

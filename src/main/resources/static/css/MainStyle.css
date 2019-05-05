@@ -1,0 +1,194 @@
+/* style sheet by james C*/
+#indexBG{
+    background-color: black;
+}
+.bannerA{
+     position: relative;
+     width: 100%;
+ }
+.bannerA img {
+    width: 100%;
+    height: auto;
+}
+
+#user_img{
+    heigth: 150px;
+    width: 150px;
+
+}
+.bannerA .a:hover {
+    background-position: 0 0px, 100% 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    border-left: 2px solid orange;
+    border-right: 2px solid red;
+    border-top: 2px solid purple;
+    border-bottom: 2px solid orange;
+    color: white;
+    transition: 1s;
+}
+.navBG{
+    width: 100%;
+    height: 13%;
+
+}
+.navBG .a{
+   position: absolute;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    border: 1px solid grey;
+    cursor: pointer;
+    border-radius: 5px;
+    top:5px;
+}
+
+
+/**log button **/
+ .log{
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    border: 1px solid grey;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+ .log:hover{
+    background-position: 0 0px, 100% 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    border-left: 2px solid orange;
+    border-right: 2px solid red;
+    border-top: 2px solid purple;
+    border-bottom: 2px solid orange;
+    color: white;
+    transition: 1s;
+}
+
+
+.navBG .b {
+    position: absolute;
+    background-color: transparent;
+    height: 60px;
+    width: auto;
+    cursor: pointer;
+
+}
+
+.btn{
+    color: white;
+    cursor: pointer;
+}
+
+.grow{
+    height: 30%;
+}
+
+.card{
+    background-color: transparent;
+}
+/**movie trailer card **/
+
+.card_container{
+    width: 100%;
+    /* height: 100%;*/
+}
+
+.cellphone-container {
+    width: 80%;
+    height: 650px;
+    background-color: #1e1b26;
+    margin: 90px auto 0 auto !important;
+    box-shadow: 5px 5px 115px -14px black;
+    border-radius: 4px;
+}
+
+.movie {
+
+    background-size: contain;
+    background-size: cover;
+    z-index: 1 !important;
+    height: 100%;
+    display: block;
+    border-radius: 4px;
+}
+
+
+
+/** actors grid**/
+
+#Actors {
+    width:80% ;
+    margin: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#Actors figure {
+    width: 14em;
+    position: relative;
+    margin: 0 15px 10px 0;
+}
+#Actors figure img {
+    width: 14em;
+    height: 200px;
+}
+
+
+#Actors figure:hover {
+    box-shadow: 3px 7px 5px #606060;
+}
+
+/** options table **/
+
+.options{
+    width: 90%;
+    color: white;
+    margin: auto;
+}
+
+/**slider style***/
+.slidecontainer {
+    width: 80%;
+    color: white;
+    margin: auto;
+
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: none;
+
+    border: 2px solid white;
+    //outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #4d4d4d;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4d4d4d;
+    cursor: pointer;
+}

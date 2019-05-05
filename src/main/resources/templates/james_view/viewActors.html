@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Actors Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/MainStyle.css}"/>
+    <script src="../../static/js/actor_search.js" th:src="@{/static/js/actor_search.js}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body id="indexBG">
+
+<!-- Banner -->
+<nav class="bannerA">
+    <div class="navBG">
+        <a class="btn a" style="right:5px" th:href="@{/}">Movies</a>
+        <a class="btn a" style="right:90px" th:href="@{/viewActors}">Actors</a>
+
+        <img class="btn b" style="left:0px" th:src="@{/img/Logo.png}" th:href="@{/}">
+        <div th:if="null==${user}" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="margin-right: 9px;">
+                <img class="btn b" style="left:50px" th:src="@{/img/UserButton.png}">    </a>
+            <ul class="dropdown-menu form-wrapper" style="width: 300px; background: none; top: 50px; ">
+                <li>  <form action="#" th:action="@{/loginProcess}" th:object="${login}" method="post" style=" top:50px; background: none;">
+                    <br><br>
+                    <div class="form-group" style="top: 20px; " >
+                        <input type="text" class="form-control" placeholder="Username" required="required" th:field="*{username}">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" required="required" th:field="*{password}">
+                    </div>
+                    <input type="submit" class="log" value="Login"></input>     <input type="submit" class="log" value="sign up"></input>
+                    <div class="form-footer">
+                        <br>
+                        <a href="#" style="color: white; ">Forgot Your password?</a>
+                        <hr>
+                    </div>
+                </form>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${user}">
+            <img class="" style="width: 100px; height: 70px; margin-left: 70px; margin-right: 20px;  "  th:src="${user.getUser_image()}">
+            <a class="btn a"  th:href="@{/logout}">log out</a>        </div>
+
+        </div>
+
+    </div>
+    <img th:src="@{/img/zincb.png}">
+    <div>
+            <table class="table table-borderless text-light options" >
+                <tr>
+                    <th><a th:href="@{/viewActors(sort= actor_name)}"><i class="fa fa-sort-alpha-asc" style="color: white;"  ></i></a> </th>
+                    <th>
+                        <div class="input-group mb-3">
+
+                            <input id="search" class="form-control" onkeyup="myFunction()" type="search" results="5" placeholder="Search Actors..." >
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </table>
+    </div>
+</nav>
+<!-- Banner -->
+
+
+
+<!-- Table
+<table class="table table-dark" style="background: black">-->
+
+<div id="Actors">
+    <figure class="figure" th:each="actor:${all_actor}" th:onclick="'javascript:rowClicked(\'' + ${actor.getActor_id()} + '\');'">
+        <div class="view overlay zoom">
+        <img class="figure-img img-fluid z-depth-1"  th:src="${actor.getActor_profile_image()}"/>
+        </div>
+        <figcaption class="figure-caption text-right text-light">
+            <h5 class="align-top align-right" style="text-align: left" th:text="${actor.getActor_name()}"></h5>
+            <p style="float: left">Age: </p>
+            <p class="align-middle align-right" style="text-align: left" th:text="${actor.getActor_age()}"></p>
+            <p style="float: left">Gender: </p>
+            <p class="align-middle align-right" style="text-align: left" th:text="${actor.getActor_gender()}"></p>
+        </figcaption>
+    </figure>
+</div>
+<!-- Table -->
+
+</body>
+<script>
+    $(document).ready(function() {
+        $('iframe').on('hover', function(ev) {
+
+            $("iframe")[0].src += "&autoplay=1";
+            ev.preventDefault();
+
+        });
+    });
+
+    function rowClicked(value) {
+        location.href = "/viewActor?id=" + value;
+    }
+
+</script>
+<style>
+    .grow{
+        height: 30%;
+    }
+    .grow:hover {
+        box-shadow: 3px 7px 5px #606060;
+
+        height: 31%;
+    }
+
+</style>
+</html>

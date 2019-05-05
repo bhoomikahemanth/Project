@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Actor Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/MainStyle.css}"/>
+
+</head>
+
+<body id="indexBG">
+
+<!-- Banner -->
+<nav class="bannerA">
+    <div class="navBG">
+        <a class="btn a" style="right:5px" th:href="@{/}">Movies</a>
+        <a class="btn a" style="right:90px" th:href="@{/viewActors}">Actors</a>
+
+        <img class="btn b" style="left:0px" th:src="@{/img/Logo.png}" th:href="@{/}">
+        <div th:if="null==${user}" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="margin-right: 9px;">
+                <img class="btn b" style="left:50px" th:src="@{/img/UserButton.png}">    </a>
+            <ul class="dropdown-menu form-wrapper" style="width: 300px; background: none; top: 50px; ">
+                <li>  <form action="#" th:action="@{/loginProcess}" th:object="${login}" method="post" style=" top:50px; background: none;">
+                    <br><br>
+                    <div class="form-group" style="top: 20px; " >
+                        <input type="text" class="form-control" placeholder="Username" required="required" th:field="*{username}">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" required="required" th:field="*{password}">
+                    </div>
+                    <input type="submit" class="log" value="Login"></input>     <input type="submit" class="log" value="sign up"></input>
+                    <div class="form-footer">
+                        <br>
+                        <a href="#" style="color: white; ">Forgot Your password?</a>
+                        <hr>
+                    </div>
+                </form>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${user}">
+            <img class="" style="width: 100px; height: 70px; margin-left: 70px; margin-right: 20px;  "  th:src="${user.getUser_image()}">
+            <a class="btn a"  th:href="@{/logout}">log out</a>        </div>
+
+    </div>
+
+    </div>
+</nav>
+<!-- Banner -->
+
+<!-- Table -->
+<div th:style="'background:url(' + @{/img/zincb.png} + ')no-repeat ; top:0;  width: 90%; height: 100%;' ">
+    <table class="table" style="margin-top: 100px; margin-left: 100px; ">
+          <tr> <td><img class="img-thumbnail" style="width: 200px;" th:src="${actor.getActor_profile_image()}"/>
+          </td><td>   <figcaption class="text-light">  <h5 class="align-top" style="text-align: left" th:text="${actor.getActor_name()}"></h5>
+            <p style="float: left">Age: </p>
+            <p class="align-middle" style="text-align: left" th:text="${actor.getActor_age()}"></p>
+            <p style="float: left">Gender: </p>
+            <p class="align-middle" style="text-align: left" th:text="${actor.getActor_gender()}"></p>
+
+          </figcaption>
+          </td>
+          </tr>
+    </table>
+
+
+<hr>
+<!-- Table -->
+
+<!-- Table -->
+<table class="table table-bordered text-light" style="  border-color:white; color: white;">
+
+    <tr th:each="movie :${movies}"  th:onclick="'javascript:rowClicked(\'' + ${movie.getMovie_id()} + '\');'">
+
+        <div class="card" style="width: 200px;  margin-left: 300px;">
+            <img class="card-img-top" th:src="${movie.getMovie_cover_image()}" th:alt="${movie.getMovie_title()}" >
+            <div class="card-body text-light" style=" color: white;" >
+                <h4 class="card-title" th:text="${movie.getMovie_title()}">John Doe</h4>
+                <p class="card-text" th:text="${movie.getMovie_genre()}">Some example text some example text. John Doe is an architect and engineer</p>
+                <a class="log" th:href="@{/viewMovie(id=${movie.getMovie_id()})}">See trailer</a>
+            </div>
+        </div>
+    </tr>
+    </tbody>
+</table>
+</div>
+<!-- Table -->
+
+
+</body>
+</html>

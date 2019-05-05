@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/MainStyle.css}"/>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="../../static/js/search_filter.js" th:src="@{/static/js/search_filter.js}"></script>
+
+</head>
+
+<body id="indexBG">
+
+<!-- Banner -->
+<nav class="bannerA">
+    <div class="navBG">
+        <a class="btn a" style="right:5px" th:href="@{/}">Movies</a>
+        <a class="btn a" style="right:90px" th:href="@{/viewActors}">Actors</a>
+
+        <img class="btn b" style="left:0px" th:src="@{/img/Logo.png}" th:href="@{/}">
+            <div th:if="null==${user}" class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="margin-right: 9px;">
+                    <img class="btn b" style="left:50px" th:src="@{/img/UserButton.png}">    </a>
+                <ul class="dropdown-menu form-wrapper" style="width: 300px; background: none; top: 50px; ">
+                    <li>  <form action="#" th:action="@{/loginProcess}" th:object="${login}" method="post" style=" top:50px; background: none;">
+                        <br><br>
+                        <div class="form-group" style="top: 20px; " >
+                            <input type="text" class="form-control" placeholder="Username" required="required" th:field="*{username}">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" required="required" th:field="*{password}">
+                        </div>
+                        <input type="submit" class="log" value="Login"></input>     <input type="submit" class="log" value="sign up"></input>
+                        <div class="form-footer">
+                            <br>
+                            <a href="#" style="color: white; ">Forgot Your password?</a>
+                            <hr>
+                        </div>
+                    </form>
+                    </li>
+                </ul>
+            </div>
+        <div th:if="${user}">
+            <img class="" style="width: 100px; height: 70px; margin-left: 70px; margin-right: 20px;  "  th:src="${user.getUser_image()}">
+            <a class="btn a"  th:href="@{/logout}">log out</a>        </div>
+
+    </div>
+    <img th:src="@{/img/zincb.png}">
+    <div>
+        <table class="table table-borderless text-light options" >
+            <tr>
+        <th><a th:href="@{/(sort= movie_release_date)}"><i class="fa fa-calendar" style="color: white;"></i> </a></th>
+            <th><a th:href="@{/(sort= movie_title)}"><i class="fa fa-sort-alpha-asc" style="color: white;"  ></i></a> </th>
+            <th> <a th:href="@{/(sort= movie_duration)}"><i class="fa fa-clock-o" style="color: white;"></i></a> </th>
+<th>
+            <div class="input-group mb-3">
+
+            <input id="search" class="form-control" onkeyup="myFunction()" type="search" results="5" placeholder="Search Movies..." >
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+                </div>
+        </div>
+
+
+    </th>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div class="slidecontainer">
+                        <p  style="display: inline-block;">ZINC Rating :  <span id="results">0</span></p>
+                        <input  class="slider" id="myRange" onchange="ratingFunction(this.value)" type="range" min="0.0" max="5.0" step="1.0" value="0">
+
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+
+        </div>
+
+
+</nav>
+<!-- Banner -->
+
+<!-- Table -->
+
+    <table  id="movies" class="table table-dark options" style="background: black">
+    <tr th:each="movies:${movie}" th:onclick="'javascript:rowClicked(\''+${movies.getMovie_id()} + '\');'">
+        <td class="align-middle grow"><img class="img-thumbnail w-100" th:src="${movies.getMovie_cover_image()}"/></td>
+        </td>
+
+        <td>
+            <h5 class="align-top" style="text-align: left" th:text="${movies.getMovie_title()}"></h5>
+            <p class="align-middle" style="text-align: left" th:text="${movies.getMovie_summery()}"></p>
+            <p style="float: left"><i class="fa fa-calendar" style="margin-right: 2px;"></i> </p>
+            <h3 id="date" class="align-middle" style="text-align: left" th:text="${movies.getMovie_release_date()}"></h3>
+            <p style="float: left"><i class="fa fa-clock-o" style="margin-right: 2px;"></i> </p>
+            <span id="duration" class="align-middle" style="text-align: left" th:text="${movies.getMovie_duration()}"></span>
+            <h4 th:text="${movies.avg_rate}" hidden></h4>
+            <div th:if="${movies.avg_rate}>0">
+            <i th:each="star:${#numbers.sequence(1,movies.avg_rate)}" class="fa fa-star" style="color: #fcd000"></i>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+    <!-- Table -->
+
+
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('iframe').on('hover', function (ev) {
+
+            $("iframe")[0].src += "&autoplay=1";
+            ev.preventDefault();
+
+        });
+    });
+    function rowClicked(value) {
+        location.href = "/viewMovie?id=" + value;
+    }
+</script>
+
+</html>
