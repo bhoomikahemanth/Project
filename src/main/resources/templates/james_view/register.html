@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New User</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/MainStyle.css}"/>
+
+</head>
+<body id="indexBG" >
+
+<nav class="bannerA">
+    <div class="navBG">
+        <a class="btn a" style="right:5px" th:href="@{/}">Movies</a>
+        <a class="btn a" style="right:90px" th:href="@{/viewActors}">Actors</a>
+
+        <img class="btn b" style="left:0px" th:src="@{/img/Logo.png}" th:href="@{/}">
+        <div th:if="null==${user}" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="margin-right: 9px;">
+                <img class="btn b" style="left:50px" th:src="@{/img/UserButton.png}">    </a>
+            <ul class="dropdown-menu form-wrapper" style="width: 300px; background: none; top: 50px; ">
+                <li>  <form action="#" th:action="@{/loginProcess}" th:object="${login}" method="post" style=" top:50px; background: none;">
+                    <br><br>
+                    <div class="form-group" style="top: 20px; " >
+                        <input type="text" class="form-control" placeholder="Username" required="required" th:field="*{username}">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" required="required" th:field="*{password}">
+                    </div>
+                    <input type="submit" class="log" value="Login"></input>     <input type="submit" class="log" value="sign up"></input>
+                    <div class="form-footer">
+                        <br>
+                        <a href="#" style="color: white; ">Forgot Your password?</a>
+                        <hr>
+                    </div>
+                </form>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${user}">
+            <img class="rounded-circle" th:src="${user.getUser_image()}">
+        </div>
+
+    </div>
+
+</nav>
+<div class="container text-light" style="margin-top: 50px; margin-left: 50px;">
+
+<div th:style="' margin:auto ; background:url(' + @{/img/zincb.png} + ')no-repeat ;  background-position: top;   top:0; width: 100%; height:100%;' ">
+    <h1 class="pb-2">Create a new user Account</h1>
+    <form action="#" th:action="@{/registerProcess}" th:object="${user}" method="post">
+        <p class="col-md-12 font-weight-bold mb-1 mt-1">User name</p>
+        <input class="col-md-4 text-center" type="text" th:field="*{username}" />
+        <p class="col-md-12 font-weight-bold mb-1 mt-1">password</p>
+        <input class="col-md-4 text-center" type="password" th:field="*{password}" />
+        <p class="col-md-12 font-weight-bold mb-1 mt-1">confirm password</p>
+        <input class="col-md-4 text-center" type="password-confirm" th:field="*{password}" />
+        <p class="col-md-12 font-weight-bold mb-1 mt-1">User Name</p>
+        <input class="col-md-4 text-center" type="text" th:field="*{user_name}" placeholder="User_name"/>
+        <p class="col-md-12 font-weight-bold mb-1 mt-1">age</p>
+        <input class="col-md-4 text-center" type="number" th:field="*{user_age}" placeholder="age"/>
+        <p class="col-md-12 font-weight-bold mb-1 mt-1">user email</p>
+        <input type="email" class="col-md-4 text-center"  th:field="*{user_email}" placeholder="enter your email here "/>
+        <p class="col-md-12 font-weight-bold mb-1 mt-1">date</p>
+        <input class="col-md-4 text-center"  type="date" th:field="*{user_join_date}" placeholder="today date "/>
+        <br>
+        <br>
+        <input class="log" type="reset" value="Reset"/>
+        <input class="log" type="submit" value="Submit"/>
+    </form>
+</div>
+</div>
+</body>
+</html>
